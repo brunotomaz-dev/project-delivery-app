@@ -1,0 +1,60 @@
+version: "3.9"
+services:
+  frontend:
+    container_name: app-frontend
+    build: ./front-end
+    ports:
+      - "3000:3000"
+    working_dir: /app-frontend
+    depends_on:
+      - serviceName: backend
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'lsof', '-t', '-i:3000']
+      timeout: 10s
+      retries: 5
+    networks:
+      - app-network
+  backend:
+    container_name: app-backend
+    build: ./back-end
+    ports:
+      - "3001:3001"
+    working_dir: /app-backend
+    command: ["npm", "run", "dev"]
+    volumes:
+      - ./back-end/src:/app-backend/src
+    environment:
+      - API_PORT=3001
+      - MYSQL_HOST=db
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=123456
+      - MYSQL_PORT=3306
+      - JWT_SECRET=secret_key
+    depends_on:
+      - serviceName: database
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'lsof', '-t', '-i:8080']
+      timeout: 10s
+      retries: 5
+    networks:
+      - app-network
+      - database-network
+  database:
+    container_name: app-database
+    image: mysql:8.0.25
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=delivery-app
+    restart: always
+    networks:
+      - database-network
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      timeout: 10s
+      retries: 5
+    cap_add:
+      - SYS_NICE
