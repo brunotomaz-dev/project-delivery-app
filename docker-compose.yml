@@ -8,7 +8,7 @@ services:
     working_dir: /app-frontend
     depends_on:
       backend:
-        condition: service_healty
+        condition: service_healthy
     healthcheck:
       test: ['CMD', 'lsof', '-t', '-i:3000']
       timeout: 10s
@@ -28,7 +28,7 @@ services:
       - JWT_SECRET=secret_key
     depends_on:
       db:
-        condition: service_healty
+        condition: service_healthy
     healthcheck:
       test: ['CMD', 'lsof', '-t', '-i:3001']
       timeout: 10s
@@ -39,7 +39,7 @@ services:
       - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=123456
-      - MYSQL_DATABASE=delivery-app
+      - MYSQL_DB_NAME=delivery-app
     restart: always
     healthcheck:
       test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
