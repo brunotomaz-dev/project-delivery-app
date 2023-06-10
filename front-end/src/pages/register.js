@@ -6,7 +6,7 @@ class Register extends React.Component {
   render() {
     const { history } = this.props;
     return (
-      <main>
+      <main className="main-full">
         <div className="register">
           <span className="animation">Cadastro</span>
           <RegistrationForm history={ history } />
