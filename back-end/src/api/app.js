@@ -9,6 +9,7 @@ app.use(express.json());
 const corsOptions = {
   origin: '*',
   methods: 'GET,POST,DELETE,OPTIONS,PUT,PATCH',
+  optionsSuccessStatus: 200,
   headers: '*',
 };
 
