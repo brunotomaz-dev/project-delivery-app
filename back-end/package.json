@@ -11,7 +11,7 @@
   "scripts": {
     "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
     "db:create": "npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
-    "prestart": "npm run db:create",
+    "prestart": "npm run db:reset",
     "start": "node .",
     "predev": "npm run db:reset",
     "dev": "nodemon .",
