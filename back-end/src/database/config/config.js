@@ -1,9 +1,9 @@
 require('dotenv').config();
 
 const opt = {
-  host: process.env.MYSQLHOST || 'localhost',
-  port: process.env.MYSQLPORT || '3306',
-  database: process.env.MYSQLDATABASE || 'delivery-app',
+  host: process.env.MYSQLHOST,
+  port: process.env.MYSQLPORT,
+  database: process.env.MYSQLDATABASE,
   username: process.env.MYSQLUSER,
   password: process.env.MYSQLPASSWORD,
   dialect: 'mysql',
